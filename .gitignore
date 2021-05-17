@@ -1,6 +1,7 @@
 *.csproj
 *.csproj.user
 *.sln
+*.vs
 /obj
 /GreedShooter/Library
-/Temp
+/GreedShooter/Temp
