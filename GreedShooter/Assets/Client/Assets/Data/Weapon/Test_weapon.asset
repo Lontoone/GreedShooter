@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Test_weapon
   m_EditorClassIdentifier: 
   damage_multiplier: 1
-  shoot_gap_time: 0.25
+  shoot_gap_time: 0.01
   ammo_row_count: 1
+  shoot_sight_angle: 30

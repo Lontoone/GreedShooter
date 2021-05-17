@@ -17,6 +17,15 @@ public class HitableObj : MonoBehaviour
     {
         Hit_event += Hit;
     }
+
+
+    private void OnEnable()
+    {
+        //Create HP Bar
+        HPBarControl hpbar = GCManager.Instantiate(HPBarControl.HPBAR_GC_KEY).GetComponent<HPBarControl>();
+        hpbar.SetHitable(this);
+    }
+
     private void OnDestroy()
     {
         Hit_event -= Hit;

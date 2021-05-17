@@ -12,6 +12,8 @@ public class ActionController : MonoBehaviour
     public List<mAction> actionQueue = new List<mAction>(); //待執行工作
 
     public event Action eActionQueueCleared; //工作清單都完成時:
+    public event Action<mAction> eOnActionComplete; //目前工作完成時
+    
     public event Action eDestoried;
 
     [SerializeField]
@@ -111,7 +113,9 @@ public class ActionController : MonoBehaviour
 
             //執行完
             Debug.Log("Action Done: " + currentAction.description);
-            //currentAction = null;
+            if (eOnActionComplete != null)
+                eOnActionComplete(currentAction);
+            currentAction = null;
 
 
             yield return WaitForFixedUpdate;
@@ -216,7 +220,7 @@ public class ActionController : MonoBehaviour
 
 
     [System.Serializable]
-    public class mAction 
+    public class mAction
     {
         public mAction() { }
         /// <param name="_des">描述.</param>

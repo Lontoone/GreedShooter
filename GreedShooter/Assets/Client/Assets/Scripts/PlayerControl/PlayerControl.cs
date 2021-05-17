@@ -14,7 +14,9 @@ public class PlayerControl : MonoBehaviour
     ActionController actionController;
     public ActionController.mAction idle_act, move_act, shoot_act, dash_act, hurt_act, die_act;
 
+    public LayerMask targetLayer;
 
+    Vector2 _move;
 
     private void Start()
     {
@@ -52,7 +54,17 @@ public class PlayerControl : MonoBehaviour
         float m_angle = (float)(Math.Atan(m)) * Mathf.Rad2Deg;
         weapon.transform.eulerAngles = new Vector3(0, 0, m_angle) + transform.rotation.eulerAngles;
 
-        actionController.AddAction(move_act);
+
+        //move or idle
+        /* TODO: can shoot while walk?
+        _move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        if (_move.magnitude == 0)
+            actionController.AddAction(idle_act);
+        else
+            actionController.AddAction(move_act);
+        */
+        _move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        Move();
 
     }
 
@@ -64,7 +76,7 @@ public class PlayerControl : MonoBehaviour
         shoot_act.action.AddListener(delegate
         {
             weapon.Shoot((cursorControl.cursor_world_position - (Vector2)transform.position).normalized,
-            ammo.ammoData);
+            ammo.ammoData).targetLayer= targetLayer;
         });
 
         shoot_act.gap_time = _newWeaponData.shoot_gap_time;
@@ -75,7 +87,6 @@ public class PlayerControl : MonoBehaviour
     public void Move()
     {
         //WASD to move
-        Vector2 _move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         transform.position = (Vector2)transform.position + _move * speed * Time.deltaTime;
 
     }
