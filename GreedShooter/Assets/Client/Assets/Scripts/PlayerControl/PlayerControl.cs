@@ -76,7 +76,8 @@ public class PlayerControl : MonoBehaviour
         shoot_act.action.AddListener(delegate
         {
             weapon.Shoot((cursorControl.cursor_world_position - (Vector2)transform.position).normalized,
-            ammo.ammoData).targetLayer= targetLayer;
+                        ammo.ammoData,
+                        targetLayer);
         });
 
         shoot_act.gap_time = _newWeaponData.shoot_gap_time;
