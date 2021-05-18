@@ -107,11 +107,11 @@ public class BasicEnemy : MonoBehaviour
         //turn
         if (_dir.x > 0)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.rotation = Quaternion.Euler(0, 180, 0);
         }
         else
         {
-            transform.rotation = Quaternion.Euler(180, 0, 0);
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
     }

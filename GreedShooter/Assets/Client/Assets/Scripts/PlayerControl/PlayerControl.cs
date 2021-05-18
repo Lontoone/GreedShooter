@@ -18,6 +18,7 @@ public class PlayerControl : MonoBehaviour
     public LayerMask targetLayer;
 
     Rigidbody2D rigidbody;
+    Animator animator;
 
     Vector2 _move;
 
@@ -25,6 +26,7 @@ public class PlayerControl : MonoBehaviour
     {
         actionController = GetComponent<ActionController>();
         rigidbody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
 
         EquipWeapon(weapon.weaponData);
     }
@@ -38,6 +40,10 @@ public class PlayerControl : MonoBehaviour
             //TODO: Shoot evnet
             actionController.AddAction(shoot_act);
         }
+        else if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            actionController.AddAction(dash_act);
+        }
     }
 
     private void FixedUpdate()
@@ -45,30 +51,34 @@ public class PlayerControl : MonoBehaviour
         // rotate player 
         if (cursorControl.cursor_world_position.x > transform.position.x)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.rotation = Quaternion.Euler(0, 180, 0);
         }
         else
         {
-            transform.rotation = Quaternion.Euler(180, 0, 0);
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
         //rotate weapon to point at cursor 
         Vector3 look_dir = cursorControl.transform.position - weapon.transform.position;
         float m = look_dir.y / Mathf.Pow(look_dir.x * look_dir.x + look_dir.y * look_dir.y, 0.5f);
         float m_angle = (float)(Math.Atan(m)) * Mathf.Rad2Deg;
-        weapon.transform.eulerAngles = new Vector3(0, 0, m_angle) + transform.rotation.eulerAngles;
+        weapon.transform.eulerAngles = new Vector3(0, 0, -m_angle) + transform.rotation.eulerAngles;
 
 
         //move or idle
         /* TODO: can shoot while walk?
-        _move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        if (_move.magnitude == 0)
-            actionController.AddAction(idle_act);
-        else
-            actionController.AddAction(move_act);
         */
         _move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        Move();
+        if (_move.magnitude < 0.1f)
+        {
+            actionController.AddAction(idle_act);
+        }
+        else
+        {
+            actionController.AddAction(move_act);
+            //Move();
+        }
+
 
     }
 
@@ -93,14 +103,19 @@ public class PlayerControl : MonoBehaviour
     {
         //WASD to move
         //transform.position = (Vector2)transform.position + _move * speed * Time.deltaTime;
-        rigidbody.velocity = _move * speed ;
+        rigidbody.velocity = _move * speed;
+
+        animator.Play("Walk");
 
     }
 
     //Dash skill
     public void Dash()
     {
-        rigidbody.velocity = _move * dash_force;
+        Vector2 _dir = (cursorControl.cursor_world_position - (Vector2)transform.position).normalized;
+        rigidbody.velocity += (cursorControl.cursor_world_position - (Vector2)transform.position).normalized * dash_force;
+        //rigidbody.AddForce(_dir * dash_force, ForceMode2D.Force);
+        Debug.Log("dash " + rigidbody.velocity);
     }
 
 }

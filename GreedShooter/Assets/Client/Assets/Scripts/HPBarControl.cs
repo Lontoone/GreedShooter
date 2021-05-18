@@ -53,7 +53,7 @@ public class HPBarControl : MonoBehaviour
         //follow gameobject
 
         //TODO: get sprite height offset
-        Vector2 _pos = new Vector2(hitable.transform.position.x, hitable.transform.position.y + 0.25f);
+        Vector2 _pos = new Vector2(hitable.transform.position.x, hitable.transform.position.y + 1.5f);
         transform.position = _pos;
 
     }
