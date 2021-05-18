@@ -65,6 +65,10 @@ public class GCManager : MonoBehaviour
             return _newobj;
 
         }
+        else
+        {
+            //從resources prefab 生出
+        }
 
         //不存在=> 返回null
         Debug.Log("Instanciate Failed, obj not found");
