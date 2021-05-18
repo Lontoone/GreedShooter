@@ -48,7 +48,10 @@ public class HitableObj : MonoBehaviour
             if (isHitable)
             {
                 HP -= damage;
+
                 //特效:
+                DamagePopUpManager.instance.PopUp((int)damage, target.transform.position);
+                ScoreManager.instance.AddScore((int)damage);
                 Hit_effect();
             }
             //判斷死亡
@@ -75,5 +78,6 @@ public class HitableObj : MonoBehaviour
     void Hit_effect()
     {
         //TODO: effect
+
     }
 }

@@ -6,6 +6,7 @@ public class PlayerControl : MonoBehaviour
 {
     public float speed = 5;
     public float shootSpeed = 1;
+    public float dash_force = 20;
 
     public CursorControl cursorControl;
     public Weapon weapon;
@@ -16,11 +17,14 @@ public class PlayerControl : MonoBehaviour
 
     public LayerMask targetLayer;
 
+    Rigidbody2D rigidbody;
+
     Vector2 _move;
 
     private void Start()
     {
         actionController = GetComponent<ActionController>();
+        rigidbody = GetComponent<Rigidbody2D>();
 
         EquipWeapon(weapon.weaponData);
     }
@@ -88,8 +92,15 @@ public class PlayerControl : MonoBehaviour
     public void Move()
     {
         //WASD to move
-        transform.position = (Vector2)transform.position + _move * speed * Time.deltaTime;
+        //transform.position = (Vector2)transform.position + _move * speed * Time.deltaTime;
+        rigidbody.velocity = _move * speed ;
 
+    }
+
+    //Dash skill
+    public void Dash()
+    {
+        rigidbody.velocity = _move * dash_force;
     }
 
 }
