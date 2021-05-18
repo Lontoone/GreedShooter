@@ -13,21 +13,27 @@ public class HitableObj : MonoBehaviour
     public bool isDead = false;
     public bool isHitable = true;
 
-    private void Start()
+    HPBarControl hpbar;
+    private IEnumerator Start()
     {
+        //wait for hp bar to finish regiester:
+        yield return new WaitForEndOfFrame();
+        //Create HP Bar
+        hpbar = GCManager.Instantiate(HPBarControl.HPBAR_GC_KEY).GetComponent<HPBarControl>();
+        hpbar.SetHitable(this);
+
         Hit_event += Hit;
     }
 
 
     private void OnEnable()
     {
-        //Create HP Bar
-        HPBarControl hpbar = GCManager.Instantiate(HPBarControl.HPBAR_GC_KEY).GetComponent<HPBarControl>();
-        hpbar.SetHitable(this);
+    
     }
 
     private void OnDestroy()
     {
+        //GCManager.Destory(HPBarControl.HPBAR_GC_KEY, hpbar.gameObject);
         Hit_event -= Hit;
     }
 

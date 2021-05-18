@@ -16,6 +16,7 @@ public class HPBarControl : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("register hp bar");
         GCManager.RegisterObject(HPBAR_GC_KEY, gameObject);
     }
     public void SetHitable(HitableObj _hitable)

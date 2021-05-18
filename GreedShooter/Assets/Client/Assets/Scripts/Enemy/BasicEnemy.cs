@@ -14,6 +14,7 @@ public class BasicEnemy : MonoBehaviour
     public float speed;
 
     public Ammo ammo_prefab;
+    public Weapon weapon;
 
     [SerializeField]
     Transform move_goal;
@@ -118,17 +119,21 @@ public class BasicEnemy : MonoBehaviour
     public void Shoot()
     {
         Debug.Log("enemy shoot");
-        Ammo ammo = GCManager.Instantiate(ammo_prefab.ammoData.GC_key).GetComponent<Ammo>();
-
-        ammo.transform.position = transform.position; //TODO: add shoot point
-        ammo.dir = (move_goal.position - transform.position).normalized;
-        ammo.targetLayer = targetLayer;
+        weapon.Shoot((move_goal.position - transform.position).normalized,
+                    ammo_prefab.ammoData,
+                    targetLayer);
+        //Ammo ammo = GCManager.Instantiate(ammo_prefab.ammoData.GC_key).GetComponent<Ammo>();
+        //
+        //ammo.transform.position = transform.position; //TODO: add shoot point
+        //ammo.dir = (move_goal.position - transform.position).normalized;
+        //ammo.targetLayer = targetLayer;
     }
 
     //TODO: dash
     //TODO: Hurt/Die
 
-    void Die() { 
-        
+    void Die()
+    {
+
     }
 }
