@@ -13,7 +13,7 @@ public class ActionController : MonoBehaviour
 
     public event Action eActionQueueCleared; //工作清單都完成時:
     public event Action<mAction> eOnActionComplete; //目前工作完成時
-    
+
     public event Action eDestoried;
 
     [SerializeField]
@@ -178,6 +178,13 @@ public class ActionController : MonoBehaviour
             currentAction = null;
             cDoProcess = null;
         }
+        else if (currentAction == null && cDoProcess != null)
+        {
+            StopCoroutine(cDoProcess);
+            currentAction = null;
+            cDoProcess = null;
+        }
+
 
         if (actionQueue.Count > maxActionCount)
         {

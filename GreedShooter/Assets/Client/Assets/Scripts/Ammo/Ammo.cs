@@ -40,7 +40,7 @@ public class Ammo : MonoBehaviour
             Debug.Log(gameObject.name + " hits " + collision.gameObject.name);
 
             //effect
-            CameraFollow.CameraShake_c(0.2f, 0.25f, 2);
+            CameraFollow.CameraShake_c(0.05f, 0.25f, 2);
             ParticleEffectManager.instance.DOBlast(ParticleEffectManager.SMALL_BLAST_GC_KYE, transform.position, 0.2f);
 
 

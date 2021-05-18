@@ -13,11 +13,11 @@ public class LevelManager : MonoBehaviour
 
     int current_lv = 1;
 
-    public float time_gap = 10;
+    public float time_gap = 30;
 
     private IEnumerator Start()
     {
-
+        //Turn
         WaitForSeconds waitForSeconds = new WaitForSeconds(time_gap);
         for (int i = 0; i < level_settings.Length; i++)
         {
@@ -31,7 +31,7 @@ public class LevelManager : MonoBehaviour
     public void Instancitate_level_data(LevelDesignData _data)
     {
         //randly create enemy obj
-        for (int i = 0; i < _data.set.Length; i++)
+        for (int i = 0; i < _data.amount; i++)
         {
             Vector2 _rand_pos = new Vector2(
                 Random.Range(levelRange.bounds.min.x, levelRange.bounds.max.x),

@@ -7,6 +7,7 @@ public class LevelDesignData : ScriptableObject
 {
 
     public EnemySet[] set;
+    public int amount=3;
     public int all_rate
     {
         get

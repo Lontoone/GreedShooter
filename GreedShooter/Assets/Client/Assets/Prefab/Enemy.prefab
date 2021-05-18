@@ -324,8 +324,8 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 257
-  damage: 5
-  speed: 5
+  damage: 1
+  speed: 2
   ammo_prefab: {fileID: 68635239}
   weapon: {fileID: 5152398005109686472}
   move_goal: {fileID: 5152398004429549569}
@@ -375,7 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 771b7feaf916a3141a0d1ea899f044ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 500
+  HP: 100
   isDead: 0
   isHitable: 1
 --- !u!61 &5152398003984418696
@@ -511,7 +511,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1
 --- !u!1 &5152398005109686471
 GameObject:
   m_ObjectHideFlags: 0

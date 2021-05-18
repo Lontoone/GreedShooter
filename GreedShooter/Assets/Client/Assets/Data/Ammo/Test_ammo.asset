@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5311b6d6cad5994b9f7dfcbafac78ae, type: 3}
   m_Name: Test_ammo
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 25
   damage: 5
-  life_time: 2.5
+  life_time: 1.5
   GC_key: GC_test_ammo

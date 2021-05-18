@@ -13,7 +13,7 @@ public class PlayerControl : MonoBehaviour
     public Ammo ammo;
 
     ActionController actionController;
-    public ActionController.mAction idle_act, move_act, shoot_act, dash_act, hurt_act, die_act;
+    public ActionController.mAction idle_act, move_act, shoot_act, dash_act, hurt_act, die_act, stop_act;
 
     public LayerMask targetLayer;
 
@@ -73,11 +73,18 @@ public class PlayerControl : MonoBehaviour
         {
             actionController.AddAction(idle_act);
         }
+        else if (_move.magnitude == 0)
+        {
+            //stop
+            actionController.AddAction(stop_act);
+        }
         else
         {
-            actionController.AddAction(move_act);
-            //Move();
+            //actionController.AddAction(move_act);
+            Move();
         }
+        Debug.Log(" v " + rigidbody.velocity);
+
 
 
     }
@@ -102,8 +109,8 @@ public class PlayerControl : MonoBehaviour
     public void Move()
     {
         //WASD to move
-        //transform.position = (Vector2)transform.position + _move * speed * Time.deltaTime;
-        rigidbody.velocity = _move * speed;
+        transform.position = (Vector2)transform.position + _move * speed * Time.deltaTime;
+        //rigidbody.velocity = _move * speed;
 
         animator.Play("Walk");
 
