@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class GC_SelfDestoryItem : MonoBehaviour
 {
+    //public EffectType effectType;
     public float life_time = 1;
+    [SerializeField]
     string key;
+    
 
     public void Setup(string _key)
     {
@@ -14,7 +17,8 @@ public class GC_SelfDestoryItem : MonoBehaviour
 
     private void OnEnable()
     {
-        Invoke("DestorySelf", life_time);
+        if (!string.IsNullOrEmpty(key))
+            Invoke("DestorySelf", life_time);
     }
     void DestorySelf()
     {

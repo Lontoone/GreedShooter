@@ -5,6 +5,7 @@ using UnityEngine;
 public class ParticleEffectManager : MonoBehaviour
 {
     public static ParticleEffectManager instance;
+
     private void Awake()
     {
         if (instance == null)
@@ -32,4 +33,7 @@ public class ParticleEffectManager : MonoBehaviour
     public const string SMALL_BLAST_GC_KYE = "SMALL_BLAST_GC_KYE";
     public GameObject smallBlast;
 
+}
+public enum EffectType{ 
+    smallBlast
 }
