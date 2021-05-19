@@ -11,10 +11,17 @@ public class Loot : MonoBehaviour
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        //temp  
+        if (type == LootType.ammo)
+            spriteRenderer.sprite = (data as AmmoData).img;
+        else
+            spriteRenderer.sprite = (data as WeaponData).img;
     }
 }
 
-public enum LootType { 
+public enum LootType
+{
     weapon,
     ammo
 }

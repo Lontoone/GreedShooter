@@ -55,6 +55,8 @@ public class BasicEnemy : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (weapon == null || ammo_prefab == null)
+            return;
         //Shoot
         if (GetTargetInDetectRange())
         {

@@ -34,7 +34,7 @@ public class Ammo : MonoBehaviour
         transform.position = (Vector2)transform.position + dir * Time.deltaTime * ammoData.speed;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)  //TODO:de bug why new ammo can't hit?
     {
         //When Hit things
         if (targetLayer == (targetLayer | (1 << collision.gameObject.layer)))

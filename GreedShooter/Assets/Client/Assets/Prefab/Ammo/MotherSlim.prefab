@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d9fb94db4b35de4faa042f053b39b60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoData: {fileID: 11400000, guid: 8a970a461febf7045b1a0a90b94d128e, type: 2}
+  ammoData: {fileID: 11400000, guid: a61246d57b19e8f478017c663f1815cf, type: 2}
   dir: {x: 0, y: 0}
   _total_damage: 0
   targetLayer:
