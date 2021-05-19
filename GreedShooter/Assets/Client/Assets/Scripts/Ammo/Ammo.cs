@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Events;
 [RequireComponent(typeof(Collider2D))]
 public class Ammo : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class Ammo : MonoBehaviour
     public Vector2 dir;
     public float _total_damage = 0;  //ammo damage * weapon's damage_multiplier 
     public LayerMask targetLayer;
+
+    public UnityEvent OnDestory;
+
     private void Start()
     {
         //gegister gc key
@@ -45,12 +49,16 @@ public class Ammo : MonoBehaviour
 
 
             //Destory self:
-            GCManager.Destory(ammoData.GC_key, gameObject);
+            DoDestory();
         }
     }
 
     void DoDestory()
     {
+        if (OnDestory != null)
+        {
+            OnDestory.Invoke();
+        }
         GCManager.Destory(ammoData.GC_key, gameObject);
     }
 

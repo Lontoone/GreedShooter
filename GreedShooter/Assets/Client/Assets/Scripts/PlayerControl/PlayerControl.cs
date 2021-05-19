@@ -126,10 +126,13 @@ public class PlayerControl : MonoBehaviour
     public void Move()
     {
         //WASD to move
-        transform.position = (Vector2)transform.position + _move * speed * Time.deltaTime;
-        //rigidbody.velocity = _move * speed;
+        if (rigidbody.velocity.magnitude < 1)
+        {
+            transform.position = (Vector2)transform.position + _move * speed * Time.deltaTime;
+            //rigidbody.velocity = _move * speed;
 
-        animator.Play("Walk");
+            animator.Play("Walk");
+        }
 
     }
 

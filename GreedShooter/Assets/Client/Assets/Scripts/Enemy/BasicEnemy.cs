@@ -43,6 +43,8 @@ public class BasicEnemy : MonoBehaviour
 
         //First default action
         actionController.AddAction(Idle_act);
+
+        shoot_act.gap_time = weapon.weaponData.shoot_gap_time;
     }
     private void OnDestroy()
     {
