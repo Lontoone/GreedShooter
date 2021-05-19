@@ -36,13 +36,17 @@ public class LootPicker : MonoBehaviour
                     //exchange weapon with this and player's
                     string _old_weaponData_name = player.weapon.weaponData.name;
                     player.EquipWeapon(Resources.Load<WeaponData>("Data/Weapon/" + _loot.data.name));
+
                     _loot.data = Resources.Load<WeaponData>("Data/Weapon/" + _old_weaponData_name);
                     _loot.spriteRenderer.sprite = (_loot.data as WeaponData).img;
-                    //_loot.GetComponent<Weapon>().SetData((WeaponData)_loot.data);
                 }
                 else
                 {
+                    string _old_ammo_data = player.ammo.ammoData.name;
                     player.EquipAmmo((AmmoData)_loot.data);
+                    _loot.data = Resources.Load<AmmoData>("Data/Ammo/" + _old_ammo_data);
+                    Debug.Log("ammo load "+ _loot.data);
+                    _loot.spriteRenderer.sprite = (_loot.data as AmmoData).img;
                 }
 
             }

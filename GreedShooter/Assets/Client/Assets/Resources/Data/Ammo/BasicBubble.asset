@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5311b6d6cad5994b9f7dfcbafac78ae, type: 3}
-  m_Name: Test_ammo_red
+  m_Name: BasicBubble
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 25
   damage: 5
-  life_time: 5
-  GC_key: GC_test_ammo_red
+  life_time: 1.5
+  GC_key: GC_test_ammo
+  img: {fileID: 21300000, guid: 25611f242727c8a4d8f76d09dfc15b9c, type: 3}
+  ammo_prefab: {fileID: 982086367721124071, guid: af73a9e5489992d469545d9d72a8ff73, type: 3}

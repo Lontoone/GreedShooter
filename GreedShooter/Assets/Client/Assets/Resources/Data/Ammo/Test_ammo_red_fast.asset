@@ -16,3 +16,5 @@ MonoBehaviour:
   damage: 5
   life_time: 2
   GC_key: GC_test_ammo_red_fast
+  img: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  ammo_prefab: {fileID: 3757969848981651721, guid: 9d2fd608101bb6140af3e8d625a172ba, type: 3}
