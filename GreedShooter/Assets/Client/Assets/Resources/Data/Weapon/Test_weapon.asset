@@ -16,3 +16,4 @@ MonoBehaviour:
   shoot_gap_time: 0.01
   ammo_row_count: 3
   shoot_sight_angle: 60
+  img: {fileID: 21300000, guid: c60c2ce2141d0794fbe2914daa49f904, type: 3}

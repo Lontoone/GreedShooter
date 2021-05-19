@@ -91,6 +91,7 @@ public class PlayerControl : MonoBehaviour
 
     public void EquipWeapon(WeaponData _newWeaponData)
     {
+
         shoot_act.action.RemoveAllListeners();
 
         //equip weapon
@@ -102,9 +103,25 @@ public class PlayerControl : MonoBehaviour
         });
 
         shoot_act.gap_time = _newWeaponData.shoot_gap_time;
-
+        weapon.SetData(_newWeaponData);
 
     }
+
+    public void EquipAmmo(AmmoData _ammoData)
+    {
+        //check if the ammo is on scene:
+        GameObject _obj = GCManager.Instantiate(_ammoData.GC_key);
+        if (_obj == null)
+        {
+            //if not => create one new;
+            _obj = Instantiate(_ammoData.ammo_prefab);
+        }
+        Ammo _newAmmo = _obj.GetComponent<Ammo>();
+        ammo = _newAmmo;
+
+        //TODO drop current ammo?;
+    }
+
 
     public void Move()
     {

@@ -5,6 +5,11 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public WeaponData weaponData;
+    SpriteRenderer spriteRenderer;
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     public virtual void Shoot(Vector2 _dir, AmmoData ammoData, LayerMask ammo_target_layer = default)
     {
@@ -34,6 +39,17 @@ public class Weapon : MonoBehaviour
         }
 
         //return _ammo;
+    }
+
+    public void SetData(WeaponData _newData)
+    {
+        weaponData = _newData;
+        if (spriteRenderer != null)
+        {
+            Debug.Log("_newData " + _newData.name);
+            spriteRenderer.sprite = _newData.img;
+        }
+
     }
 
 
