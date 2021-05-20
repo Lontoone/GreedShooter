@@ -13,15 +13,19 @@ public class Ammo : MonoBehaviour
     public LayerMask targetLayer;
 
     public UnityEvent OnDestory;
-    Collider2D collider;
+    protected Collider2D collider;
     ContactFilter2D filter2D;
     static Collider2D[] res = new Collider2D[200];
 
+    protected virtual void Awake()
+    {
+        collider = GetComponent<Collider2D>();
+    }
     protected virtual void Start()
     {
         //gegister gc key
         GCManager.RegisterObject(ammoData.GC_key, gameObject);
-        collider = GetComponent<Collider2D>();
+
 
     }
     protected virtual void OnEnable()
@@ -29,7 +33,12 @@ public class Ammo : MonoBehaviour
         //self destory after life time
         Invoke("DoDestory", ammoData.life_time);
 
-        filter2D.SetLayerMask(targetLayer);
+        //SetTargetLayer(targetLayer);
+    }
+    public void SetTargetLayer(LayerMask layerMask)
+    {
+        targetLayer = layerMask;
+        filter2D.SetLayerMask(layerMask);
 
     }
     private void OnDisable()
@@ -40,6 +49,12 @@ public class Ammo : MonoBehaviour
     {
         Move();
 
+        CollisionDetect();
+    }
+
+    public virtual void CollisionDetect()
+    {
+        Debug.Log(collider == null);
         //detect collision
         int num = collider.OverlapCollider(filter2D, res);
         for (int i = 0; i < num; i++)
@@ -49,9 +64,7 @@ public class Ammo : MonoBehaviour
         }
         if (num > 0)
         {
-            //effect
-            ParticleEffectManager.instance.DOBlast(ParticleEffectManager.SMALL_BLAST_GC_KYE, transform.position, 0.2f);
-            CameraFollow.CameraShake_c(0.01f, 0.1f, 2);
+
             //Destory self:
             DoDestory();
         }
@@ -76,6 +89,12 @@ public class Ammo : MonoBehaviour
             DoDestory();
         }
         */
+    }
+
+    public virtual void SetUP(Vector2 _start_pos, Vector2 _vec)
+    {
+        transform.position = _start_pos;
+        vec = _vec;
     }
 
     public virtual void Move()

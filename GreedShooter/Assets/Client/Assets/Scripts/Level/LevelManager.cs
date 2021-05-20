@@ -6,6 +6,18 @@ public class LevelManager : MonoBehaviour
 {
     //manage each level 
     //public int round_counter = 3;
+
+    public static LevelManager instance;
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public TextMeshProUGUI turn_count_downtext;
     public LevelDesignData[] level_settings;
 
@@ -14,6 +26,17 @@ public class LevelManager : MonoBehaviour
     int current_lv = 1;
 
     public float time_gap = 30;
+
+    public Vector2 randomPosInMap
+    {
+        get
+        {
+            return new Vector2(
+              Random.Range(levelRange.bounds.min.x, levelRange.bounds.max.x),
+              Random.Range(levelRange.bounds.min.y, levelRange.bounds.max.y)
+              );
+        }
+    }
 
     private IEnumerator Start()
     {

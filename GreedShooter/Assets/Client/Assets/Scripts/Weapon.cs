@@ -28,18 +28,21 @@ public class Weapon : MonoBehaviour
             GameObject _obj = GCManager.Instantiate(ammoData.GC_key);
             if (_obj == null)
             {
-                Debug.Log("_obj not registered " +ammoData.GC_key);
+                Debug.Log("_obj not registered " + ammoData.GC_key);
                 return;
             }
 
             Ammo _ammo = _obj.GetComponent<Ammo>();
-            _ammo.transform.position = transform.position;
+            //TODO: clean code
+
+            //_ammo.transform.position = transform.position;
 
             //_ammo.dir = _dir;
-            _ammo.vec = _divers_dir;
-
+            //_ammo.vec = _divers_dir;
+            _ammo.SetUP(transform.position, _divers_dir);
             _ammo._total_damage = weaponData.damage_multiplier * ammoData.damage;
-            _ammo.targetLayer = ammo_target_layer;
+            //_ammo.targetLayer = ammo_target_layer;
+            _ammo.SetTargetLayer(ammo_target_layer);
 
             _start_vec = _divers_dir;
 

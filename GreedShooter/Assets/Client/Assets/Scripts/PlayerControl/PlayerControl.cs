@@ -19,6 +19,7 @@ public class PlayerControl : MonoBehaviour
 
     Rigidbody2D rigidbody;
     Animator animator;
+    HitableObj hitable;
 
     Vector2 _move;
 
@@ -27,6 +28,7 @@ public class PlayerControl : MonoBehaviour
         actionController = GetComponent<ActionController>();
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        hitable = GetComponent<HitableObj>();
 
         EquipWeapon(weapon.weaponData);
     }
@@ -146,6 +148,12 @@ public class PlayerControl : MonoBehaviour
         rigidbody.velocity += (cursorControl.cursor_world_position - (Vector2)transform.position).normalized * dash_force;
         //rigidbody.AddForce(_dir * dash_force, ForceMode2D.Force);
         Debug.Log("dash " + rigidbody.velocity);
+
+        hitable.isHitable = false;
+        Invoke("SetHitable",0.25f);
     }
 
+    void SetHitable() {
+        hitable.isHitable = true;
+    }
 }

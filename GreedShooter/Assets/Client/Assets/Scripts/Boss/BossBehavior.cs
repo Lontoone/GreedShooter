@@ -33,9 +33,14 @@ public class BossBehavior : MonoBehaviour
         {
             //Draw random skill
             int _rand = Random.Range(0, 100);
-            if (_rand <= 80)
+            if (_rand <= 20)
             {
                 actionController.AddAction(skill1);
+
+            }
+            else if (_rand < 40)
+            {
+                actionController.AddAction(skill2);
             }
 
             yield return wait;
@@ -45,7 +50,11 @@ public class BossBehavior : MonoBehaviour
 
     public void SetWeapon(int _index)
     {
-
+        current_weapon_index = _index;
+    }
+    public void SetAmmo(int _index)
+    {
+        current_ammo_index = _index;
     }
     //default attack:  shoot 360 deg
 
@@ -81,6 +90,30 @@ public class BossBehavior : MonoBehaviour
 
 
     //Attack 2 : summon Meteorite / monster
+    public void Skill2(int _amount)
+    {
+        StartCoroutine(Skill2_coro(_amount));
+    }
+    IEnumerator Skill2_coro(int _amount)
+    {
+        int c = 0;
+        WaitForSeconds _wait = new WaitForSeconds(1f);
+        while (c < _amount)
+        {
+            int random_scale = Random.Range(2, 30);
+            //Vector2 _pos = new Vector2(Mathf.Cos(Time.time), Mathf.Sin(Time.time)) * random_scale;
+            Vector2 _pos = LevelManager.instance.randomPosInMap;
+            weapons[current_weapon_index].Shoot(
+               _pos,
+               ammos[current_ammo_index].ammoData,
+               basicEnemy.targetLayer
+               );
+
+
+            c++;
+            yield return _wait;
+        }
+    }
 
 
 

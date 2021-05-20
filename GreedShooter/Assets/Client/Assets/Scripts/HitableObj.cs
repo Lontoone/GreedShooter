@@ -84,6 +84,8 @@ public class HitableObj : MonoBehaviour
     void Hit_effect()
     {
         //TODO: effect
-
+        //effect
+        ParticleEffectManager.instance.DOBlast(ParticleEffectManager.SMALL_BLAST_GC_KYE, transform.position, 0.2f);
+        CameraFollow.CameraShake_c(0.01f, 0.1f, 2);
     }
 }
