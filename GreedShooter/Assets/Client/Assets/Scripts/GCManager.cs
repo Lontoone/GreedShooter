@@ -15,7 +15,7 @@ using UnityEngine;
 public class GCManager : MonoBehaviour
 {
     static Dictionary<string, LinkedList<object>> dicts = new Dictionary<string, LinkedList<object>>();
-
+    static Dictionary<string, int> group_amount = new Dictionary<string, int>();
     public static void RegisterObject(string _key, Object _obj)
     {
         LinkedList<object> _out;
@@ -102,4 +102,23 @@ public class GCManager : MonoBehaviour
         }
     }
 
+    public static void RegisterGrounp(string _groupkey, int amount)
+    {
+
+        if (!group_amount.ContainsKey(_groupkey))
+        {
+            group_amount.Add(_groupkey, amount);
+        }
+    }
+    public static int GetGroupCount(string _groupKey)
+    {
+        if (!group_amount.ContainsKey(_groupKey))
+        {
+            return 0;
+        }
+        else
+        {
+            return group_amount[_groupKey];
+        }
+    }
 }

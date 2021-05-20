@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
-[RequireComponent(typeof(HitableObj))]
+//[RequireComponent(typeof(HitableObj))]
+
 public class BreakToPiece : MonoBehaviour
 {
     SpriteRenderer spr;
@@ -15,16 +16,21 @@ public class BreakToPiece : MonoBehaviour
     public float gapTime = 0.01f;
     public bool doRectBox = true;//產生方形而不是三角形的碎片
     HitableObj hitable;
+
+    public string GC_Key = "";
     private void Start()
     {
         hitable = gameObject.GetComponent<HitableObj>();
-        hitable.Die_event += DoBreak;
+        if (hitable != null)
+            hitable.Die_event += DoBreak;
     }
     private void OnDestroy()
     {
-        hitable.Die_event -= DoBreak;
+        if (hitable != null)
+            hitable.Die_event -= DoBreak;
     }
-    private void DoBreak()
+    [ContextMenu("Do Break")]
+    public void DoBreak()
     {
         StartCoroutine(BreakSlowly_coro());
     }
@@ -88,6 +94,7 @@ public class BreakToPiece : MonoBehaviour
         //四角形的
         if (doRectBox)
         {
+            int _count = 0; //紀錄幾個碎片
             for (int i = 0; i < subDividedMesh.triangles.Length - 5; i += 6)
             {
                 Mesh newPiece = SeparateMesh_rect(subDividedMesh, i);
@@ -117,6 +124,8 @@ public class BreakToPiece : MonoBehaviour
                 //刪掉原本的
                 //Destroy(gameObject);
             }
+
+
         }
         //三角形的
         else
@@ -145,6 +154,7 @@ public class BreakToPiece : MonoBehaviour
                 //給後續處理
                 if (eCreateNewPiece != null)
                     eCreateNewPiece(newSubMesh_obj);
+
 
                 yield return new WaitForSeconds(gapTime);
                 //刪掉原本的

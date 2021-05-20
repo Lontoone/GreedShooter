@@ -27,12 +27,12 @@ public class Meteorite : Ammo
 
     protected override void OnEnable()
     {
-       
+
         //filter2D.SetLayerMask(targetLayer);
         //attackRange.enabled = false;
         collider.enabled = false;
 
-        
+
     }
     public override void Move()
     {
@@ -46,19 +46,16 @@ public class Meteorite : Ammo
         {
             //reach goal position
 
+            //Effect
+            ParticleEffectManager.instance.DOBlast(ParticleEffectManager.Large_BLAST_GC_KYE,
+                transform.position,
+                3f);
+
             //Attack
-            //attackRange.enabled = true;
             collider.enabled = true;
             CollisionDetect();
             DoDestory();
-            /*
-            int _hits = attackRange.OverlapCollider(filter2D, res);
-            for (int i = 0; i < _hits; i++)
-            {
-                HitableObj.Hit_event_c(res[i].gameObject, _total_damage);
-            }
 
-            DoDestory();*/
         }
     }
 
