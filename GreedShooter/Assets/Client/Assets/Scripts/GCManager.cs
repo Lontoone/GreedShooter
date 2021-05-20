@@ -21,6 +21,7 @@ public class GCManager : MonoBehaviour
         LinkedList<object> _out;
         if (!dicts.TryGetValue(_key, out _out))
         {
+            //create new and add to first
             dicts.Add(_key, new LinkedList<object>());
             dicts[_key].AddFirst(_obj);
 
@@ -29,6 +30,8 @@ public class GCManager : MonoBehaviour
         }
         else
         {
+            //already registered. Add to first as usable.
+            dicts[_key].AddFirst(_obj);
             (_obj as GameObject).SetActive(false);
             Debug.Log("Already exist");
         }

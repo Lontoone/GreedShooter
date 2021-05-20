@@ -279,7 +279,6 @@ MonoBehaviour:
   speed: 5
   ammo_prefab: {fileID: 8977614277919463139}
   weapon: {fileID: 7851246274171087888}
-  move_goal: {fileID: 7851246275656244441}
   random_move_radious: 1.5
   detect_layermask:
     serializedVersion: 2
@@ -313,7 +312,8 @@ MonoBehaviour:
     timeOut: 0
     time_out_counter: 0
   allowDuplicate: 0
-  stopWhenInvisiable: 1
+  stopWhenInvisiable: 0
+  updateTime: 0.02
 --- !u!114 &7851246275293965151
 MonoBehaviour:
   m_ObjectHideFlags: 0

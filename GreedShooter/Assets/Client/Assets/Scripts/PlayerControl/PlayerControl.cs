@@ -98,7 +98,9 @@ public class PlayerControl : MonoBehaviour
         //equip weapon
         shoot_act.action.AddListener(delegate
         {
-            weapon.Shoot((cursorControl.cursor_world_position - (Vector2)transform.position).normalized,
+            //Debug.Log(cursorControl.cursor_world_position);
+            //weapon.Shoot(cursorControl.cursor_world_position,
+            weapon.Shoot((cursorControl.cursor_world_position - (Vector2)transform.position),
                         ammo.ammoData,
                         targetLayer);
         });

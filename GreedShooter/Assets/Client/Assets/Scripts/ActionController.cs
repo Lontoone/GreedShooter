@@ -25,8 +25,13 @@ public class ActionController : MonoBehaviour
     public bool allowDuplicate = true;//允許重複動作?
 
     public bool stopWhenInvisiable = true;
+    //public float updateTime = Time.fixedDeltaTime;
+    WaitForSeconds waitUpdate;
     bool isVisiable = true;
-
+    private void Start()
+    {
+        //waitUpdate = new WaitForSeconds(updateTime);
+    }
     private void OnBecameInvisible()
     {
         if (stopWhenInvisiable)
@@ -95,6 +100,8 @@ public class ActionController : MonoBehaviour
 
                     time_counter += Time.fixedDeltaTime;
                     yield return WaitForFixedUpdate;
+                    //time_counter += updateTime;
+                    //yield return waitUpdate;
                 }
             }
 
@@ -212,6 +219,7 @@ public class ActionController : MonoBehaviour
             cTimeOutCheck = StartCoroutine(CheckTimeOut());
         }
     }
+
 
     //將排隊過久的刪除
     IEnumerator CheckTimeOut()

@@ -129,7 +129,8 @@ public class BasicEnemy : MonoBehaviour
     public void Shoot()
     {
         Debug.Log("enemy shoot");
-        weapon.Shoot((move_goal.position - transform.position).normalized,
+        //weapon.Shoot(move_goal.position,
+        weapon.Shoot((move_goal.position - transform.position),
                     ammo_prefab.ammoData,
                     targetLayer);
         //Ammo ammo = GCManager.Instantiate(ammo_prefab.ammoData.GC_key).GetComponent<Ammo>();

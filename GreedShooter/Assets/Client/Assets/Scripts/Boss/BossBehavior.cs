@@ -6,16 +6,17 @@ public class BossBehavior : MonoBehaviour
 {
     ActionController actionController;
     HitableObj hitableObj;
+    BasicEnemy basicEnemy;
     public ActionController.mAction skill1, skill2, skill3, skill4;
     private void Start()
     {
         actionController = GetComponent<ActionController>();
         hitableObj = gameObject.GetComponent<HitableObj>();
+        basicEnemy = GetComponent<BasicEnemy>();
 
         cDrawSkill = StartCoroutine(DrawASkill());
     }
 
-    public LayerMask targetLayer;
 
     int current_weapon_index;
     int current_ammo_index;
@@ -51,23 +52,37 @@ public class BossBehavior : MonoBehaviour
     //Attack 1 : long shoot and spin
     public void Skill1(float rotateSpeed)
     {
-        Vector2 _dir = new Vector2(
-            Mathf.Cos(Time.time),
-            Mathf.Sin(Time.time)
-            );
-
-        //weapons[weapon_index].Shoot();
-        weapons[current_weapon_index].Shoot(
-            _dir,
-            ammos[current_ammo_index].ammoData,
-            targetLayer
-            );
-
-        transform.Rotate(0, 0, rotateSpeed);
+        StartCoroutine(Skill_coro(0.05f, rotateSpeed));
 
     }
+    IEnumerator Skill_coro(float _interval, float rotateSpeed)
+    {
+        float t = 0;
+        WaitForSeconds _wait = new WaitForSeconds(_interval);
+        while (t < skill1.duration)
+        {
+            t += _interval;
+            Vector2 _dir = new Vector2(
+           Mathf.Cos(Time.time) * rotateSpeed,
+           Mathf.Sin(Time.time) * rotateSpeed
+           );
 
-    //Attack 2 : summon monster
+            //weapons[weapon_index].Shoot();
+            weapons[current_weapon_index].Shoot(
+                _dir,
+                ammos[current_ammo_index].ammoData,
+                basicEnemy.targetLayer
+                );
+
+            transform.Rotate(0, 0, rotateSpeed);
+            yield return _wait;
+        }
+    }
+
+
+    //Attack 2 : summon Meteorite / monster
+
+
 
 
     // ======= HP below 30%========

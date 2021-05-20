@@ -36,7 +36,7 @@ public class Weapon : MonoBehaviour
             _ammo.transform.position = transform.position;
 
             //_ammo.dir = _dir;
-            _ammo.dir = _divers_dir;
+            _ammo.vec = _divers_dir;
 
             _ammo._total_damage = weaponData.damage_multiplier * ammoData.damage;
             _ammo.targetLayer = ammo_target_layer;
