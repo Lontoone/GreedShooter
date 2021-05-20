@@ -29,6 +29,7 @@ public class GCManager : MonoBehaviour
         }
         else
         {
+            (_obj as GameObject).SetActive(false);
             Debug.Log("Already exist");
         }
     }

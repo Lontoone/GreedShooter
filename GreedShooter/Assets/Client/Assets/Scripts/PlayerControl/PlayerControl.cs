@@ -35,15 +35,20 @@ public class PlayerControl : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (Input.GetMouseButton(0))
         {
             //TODO: Shoot evnet
             actionController.AddAction(shoot_act);
         }
-        else if (Input.GetKeyDown(KeyCode.LeftShift))
+        */
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             actionController.AddAction(dash_act);
         }
+
+        //Auto Shoot
+        actionController.AddAction(shoot_act);
     }
 
     private void FixedUpdate()
@@ -71,12 +76,8 @@ public class PlayerControl : MonoBehaviour
         _move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         if (_move.magnitude < 0.1f)
         {
-            actionController.AddAction(idle_act);
-        }
-        else if (_move.magnitude == 0)
-        {
-            //stop
-            actionController.AddAction(stop_act);
+            //actionController.AddAction(idle_act);
+            animator.Play("Idle");
         }
         else
         {

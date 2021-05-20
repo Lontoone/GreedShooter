@@ -17,6 +17,7 @@ public class AmmoExtraFunction : MonoBehaviour
     {
         if (attack_setting != null)
         {
+            Debug.Log("extra " + (transform == null) + " " + (_ammo == null )+ " " + (parent_ammo == null));
             attack_setting.Shoot(transform.up, _ammo.ammoData, parent_ammo.targetLayer);
         }
     }

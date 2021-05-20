@@ -16,8 +16,8 @@ public class BasicEnemy : MonoBehaviour
     public Ammo ammo_prefab;
     public Weapon weapon;
 
-    [SerializeField]
     Transform move_goal;
+    SpriteRenderer sp;
 
     public float random_move_radious = 1.5f;
 
@@ -29,6 +29,7 @@ public class BasicEnemy : MonoBehaviour
 
     private void Start()
     {
+        sp = GetComponent<SpriteRenderer>();
         actionController = GetComponent<ActionController>();
         hitableObj = GetComponent<HitableObj>();
 
@@ -45,6 +46,9 @@ public class BasicEnemy : MonoBehaviour
         actionController.AddAction(Idle_act);
 
         shoot_act.gap_time = weapon.weaponData.shoot_gap_time;
+
+        //generate move goal
+        move_goal = new GameObject().transform;
     }
     private void OnDestroy()
     {
@@ -111,10 +115,12 @@ public class BasicEnemy : MonoBehaviour
         //turn
         if (_dir.x > 0)
         {
+            //sp.flipX =true;
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
         else
         {
+            //sp.flipX = false;
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 

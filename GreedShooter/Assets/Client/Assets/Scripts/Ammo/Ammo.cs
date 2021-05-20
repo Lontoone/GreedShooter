@@ -25,8 +25,10 @@ public class Ammo : MonoBehaviour
         //self destory after life time
         Invoke("DoDestory", ammoData.life_time);
 
-
-
+    }
+    private void OnDisable()
+    {
+        CancelInvoke("DoDestory");   
     }
     private void FixedUpdate()
     {
