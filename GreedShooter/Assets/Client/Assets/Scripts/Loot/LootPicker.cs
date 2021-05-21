@@ -22,7 +22,7 @@ public class LootPicker : MonoBehaviour
     private void Update()
     {
         //press e to pick weapon
-        if (Input.GetKeyDown(KeyCode.E))
+        //if (Input.GetKeyDown(KeyCode.E))
         {
             //pick loot
             int num = pick_range.OverlapCollider(filter2D, res);
@@ -39,14 +39,20 @@ public class LootPicker : MonoBehaviour
 
                     _loot.data = Resources.Load<WeaponData>("Data/Weapon/" + _old_weaponData_name);
                     _loot.spriteRenderer.sprite = (_loot.data as WeaponData).img;
+
+                    //put aside
+                    _loot.transform.position = player.transform.position + player.transform.up * 2;
                 }
                 else
                 {
                     string _old_ammo_data = player.ammo.ammoData.name;
                     player.EquipAmmo((AmmoData)_loot.data);
                     _loot.data = Resources.Load<AmmoData>("Data/Ammo/" + _old_ammo_data);
-                    Debug.Log("ammo load "+ _loot.data);
+                    Debug.Log("ammo load " + _loot.data);
                     _loot.spriteRenderer.sprite = (_loot.data as AmmoData).img;
+
+                    //put aside
+                    _loot.transform.position = player.transform.position + player.transform.up * 2;
                 }
 
             }

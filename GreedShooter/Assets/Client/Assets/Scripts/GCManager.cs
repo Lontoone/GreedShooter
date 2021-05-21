@@ -16,6 +16,8 @@ public class GCManager : MonoBehaviour
 {
     static Dictionary<string, LinkedList<object>> dicts = new Dictionary<string, LinkedList<object>>();
     static Dictionary<string, int> group_amount = new Dictionary<string, int>();
+
+    static int _db_c = 0;
     public static void RegisterObject(string _key, Object _obj)
     {
         LinkedList<object> _out;
@@ -31,15 +33,15 @@ public class GCManager : MonoBehaviour
         else
         {
             //already registered. Add to first as usable.
-            dicts[_key].AddFirst(_obj);
-            (_obj as GameObject).SetActive(false);
+            //dicts[_key].AddFirst(_obj);
+            //(_obj as GameObject).SetActive(false);
             Debug.Log("Already exist");
         }
     }
 
 
     //取得有空閒的物品
-    public static GameObject Instantiate(string _key, Transform parent = null)
+    public static GameObject Instantiate(string _key, Transform parent = null, Vector2 position = default, GameObject prefab = null)
     {
         //檢查該key是否存在
         LinkedList<object> _out;
@@ -49,12 +51,18 @@ public class GCManager : MonoBehaviour
             if (!(_out.First.Value as GameObject).activeSelf)
             {
                 LinkedListNode<object> first_obj = _out.First;
+                (first_obj.Value as GameObject).transform.position = position;
                 (first_obj.Value as GameObject).SetActive(true);
 
                 //移至最後:
                 dicts[_key].RemoveFirst();
                 dicts[_key].AddLast(first_obj);
                 (first_obj.Value as GameObject).transform.SetParent(parent);
+                Debug.Log("GC Get First value " + _db_c.ToString());
+
+                (first_obj.Value as GameObject).name = _db_c.ToString();
+                _db_c++;
+
                 return (first_obj.Value as GameObject);
             }
 
@@ -64,18 +72,25 @@ public class GCManager : MonoBehaviour
             dicts[_key].AddLast(_newobj);
             //LinkedListNode<object> newNode = dicts[_key].AddLast(_newobj);
             //return newNode;
-
+            Debug.Log("GC Create new one");
 
             return _newobj;
 
         }
-        else
+        else if (prefab != null)
         {
-            //從resources prefab 生出
+            //生出初始prefab:
+            GameObject _newobj = UnityEngine.GameObject.Instantiate((GameObject)dicts[_key].First.Value);
+            //RegisterObject(_key, _newobj);
+            dicts.Add(_key, new LinkedList<object>());
+            dicts[_key].AddLast(_newobj);
+            _newobj.SetActive(true);
+            Debug.Log("GC Create prefab");
+            return _newobj;
         }
 
         //不存在=> 返回null
-        Debug.Log("Instanciate Failed, obj not found");
+        Debug.Log("GC Instanciate Failed, obj not found");
         return null;
     }
 
@@ -87,10 +102,12 @@ public class GCManager : MonoBehaviour
         LinkedListNode<object> to_remove_obj = dicts[_key].Find(obj);
         if (to_remove_obj == null)
         {
+            Debug.Log("GC find null " + obj.name);
             return;
         }
         dicts[_key].Remove(to_remove_obj);
         dicts[_key].AddFirst(obj);
+        Debug.Log("GC回收 " + obj.name);
 
     }
 

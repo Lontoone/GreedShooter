@@ -10,6 +10,11 @@ public class Loot : MonoBehaviour
 
     private void Start()
     {
+        SetUP(data);
+    }
+
+    public void SetUP(ScriptableObject _data)
+    {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         //temp  

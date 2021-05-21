@@ -20,6 +20,8 @@ public class ParticleEffectManager : MonoBehaviour
         //register particle
         GCManager.RegisterObject(SMALL_BLAST_GC_KYE, smallBlast);
         GCManager.RegisterObject(Large_BLAST_GC_KYE, largeBlast);
+        GCManager.RegisterObject(RED_CIRCLE_HINT_GC_KEY, red_circle);
+
     }
 
     public void DOBlast(string _key, Vector2 _pos, float _lifeTime)
@@ -33,8 +35,10 @@ public class ParticleEffectManager : MonoBehaviour
 
     public const string SMALL_BLAST_GC_KYE = "SMALL_BLAST_GC_KYE";
     public const string Large_BLAST_GC_KYE = "Large_BLAST_GC_KYE";
+    public const string RED_CIRCLE_HINT_GC_KEY = "RED_CIRCLE_HINT_GC_KEY";
     public GameObject smallBlast;
     public GameObject largeBlast;
+    public GameObject red_circle;
 
 }
 public enum EffectType{ 

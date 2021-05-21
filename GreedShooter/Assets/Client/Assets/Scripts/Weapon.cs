@@ -25,7 +25,9 @@ public class Weapon : MonoBehaviour
             Vector2 _divers_dir = _start_vec.rotate(_seg * Mathf.Deg2Rad);
 
             //generate ammo
-            GameObject _obj = GCManager.Instantiate(ammoData.GC_key);
+            GameObject _obj = GCManager.Instantiate(ammoData.GC_key, 
+                                                    prefab: ammoData.ammo_prefab ,
+                                                    position: transform.position); 
             if (_obj == null)
             {
                 Debug.Log("_obj not registered " + ammoData.GC_key);
@@ -36,7 +38,6 @@ public class Weapon : MonoBehaviour
             //TODO: clean code
 
             //_ammo.transform.position = transform.position;
-
             //_ammo.dir = _dir;
             //_ammo.vec = _divers_dir;
             _ammo.SetUP(transform.position, _divers_dir);

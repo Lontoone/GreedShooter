@@ -14,8 +14,8 @@ public class Ammo : MonoBehaviour
 
     public UnityEvent OnDestory;
     protected Collider2D collider;
-    ContactFilter2D filter2D;
-    static Collider2D[] res = new Collider2D[200];
+    protected ContactFilter2D filter2D;
+    protected static Collider2D[] res = new Collider2D[200];
 
     protected virtual void Awake()
     {
@@ -54,13 +54,12 @@ public class Ammo : MonoBehaviour
 
     public virtual void CollisionDetect()
     {
-        Debug.Log(collider == null);
         //detect collision
         int num = collider.OverlapCollider(filter2D, res);
         for (int i = 0; i < num; i++)
         {
             HitableObj.Hit_event_c(res[i].gameObject, ammoData.damage);
-            Debug.Log("hit " + res[i].gameObject.name);
+            Debug.Log(gameObject.name + " GC obj hit " + res[i].gameObject.name);
         }
         if (num > 0)
         {

@@ -14,6 +14,8 @@ public class HPBarControl : MonoBehaviour
 
     public const string HPBAR_GC_KEY = "HPBAR_GC_KEY";
 
+    float height_offset = 0;
+
     private void Awake()
     {
         Debug.Log("register hp bar");
@@ -25,6 +27,8 @@ public class HPBarControl : MonoBehaviour
         maxHP = hitable.HP;
         hitable.gotHit_event += UpdateHPBar;
         hitable.Die_event += DestorySelfOnDie;
+
+        height_offset = (float)_hitable.gameObject.GetComponent<SpriteRenderer>()?.bounds.size.y;
     }
 
     private void OnEnable()
@@ -34,6 +38,8 @@ public class HPBarControl : MonoBehaviour
         maxHP = hitable.HP;
         hitable.gotHit_event += UpdateHPBar;
         hitable.Die_event += DestorySelfOnDie;
+
+
     }
     private void OnDisable()
     {
@@ -53,7 +59,7 @@ public class HPBarControl : MonoBehaviour
         //follow gameobject
 
         //TODO: get sprite height offset
-        Vector2 _pos = new Vector2(hitable.transform.position.x, hitable.transform.position.y + 1.5f);
+        Vector2 _pos = new Vector2(hitable.transform.position.x, hitable.transform.position.y + height_offset);
         transform.position = _pos;
 
     }

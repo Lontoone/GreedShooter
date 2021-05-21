@@ -86,7 +86,7 @@ public class PlayerControl : MonoBehaviour
             //actionController.AddAction(move_act);
             Move();
         }
-        Debug.Log(" v " + rigidbody.velocity);
+
 
 
 
@@ -145,8 +145,8 @@ public class PlayerControl : MonoBehaviour
     public void Dash()
     {
         Vector2 _dir = (cursorControl.cursor_world_position - (Vector2)transform.position).normalized;
-        rigidbody.velocity += (cursorControl.cursor_world_position - (Vector2)transform.position).normalized * dash_force;
-        //rigidbody.AddForce(_dir * dash_force, ForceMode2D.Force);
+        //rigidbody.velocity += (cursorControl.cursor_world_position - (Vector2)transform.position).normalized * dash_force;
+        rigidbody.velocity += _move.normalized * dash_force;
         Debug.Log("dash " + rigidbody.velocity);
 
         hitable.isHitable = false;
@@ -156,4 +156,5 @@ public class PlayerControl : MonoBehaviour
     void SetHitable() {
         hitable.isHitable = true;
     }
+
 }

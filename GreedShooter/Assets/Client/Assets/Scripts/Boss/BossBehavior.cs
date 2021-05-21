@@ -36,11 +36,24 @@ public class BossBehavior : MonoBehaviour
             if (_rand <= 20)
             {
                 actionController.AddAction(skill1);
+                //actionController.AddAction(skill3);
+
 
             }
             else if (_rand < 40)
             {
                 actionController.AddAction(skill2);
+                //actionController.AddAction(skill3);
+
+            }
+            else if (_rand < 60)
+            {
+                actionController.AddAction(skill4);
+
+            }
+            else if (_rand < 80)
+            {
+                actionController.AddAction(skill3);
             }
 
             yield return wait;
@@ -83,7 +96,7 @@ public class BossBehavior : MonoBehaviour
                 basicEnemy.targetLayer
                 );
 
-            transform.Rotate(0, 0, rotateSpeed);
+            //transform.Rotate(0, 0, rotateSpeed);
             yield return _wait;
         }
     }
@@ -120,9 +133,131 @@ public class BossBehavior : MonoBehaviour
 
     // ======= HP below 30%========
 
-    //Attack 3 : long shoot and spin faster and reverse orientation(lower cool down time)
+    //Attack 3 : cerate ball circles
+    public void Skill3()
+    {
+        StartCoroutine(Skill3(10, 1));
+    }
+    IEnumerator Skill3(float _time, int _count)
+    {
+        Vector2[] _starts = new Vector2[_count];
+        //WaitForFixedUpdate _wait = new WaitForFixedUpdate();
+        WaitForSeconds _wait = new WaitForSeconds(0.25f);
 
-    //Attack 4 : map fire
+        //create start points
+        float _seg = 360 / _count;
+        for (int i = 0; i < _count; i++)
+        {
+            _starts[i] = new Vector2(Mathf.Cos(_seg * i * Mathf.Deg2Rad), Mathf.Sin(_seg * i * Mathf.Deg2Rad));
+        }
+
+        SetWeapon(1);
+        SetAmmo(1);
+        //SetAmmo(Random.Range(0, ammos.Length));
+
+        float _timeCounter = 0;
+        while (_timeCounter < _time)
+        {
+            //rotate starts and create ammos
+            for (int i = 0; i < _count; i++)
+            {
+                weapons[current_weapon_index].Shoot(
+                                                    _starts[i] * _timeCounter*0.5f,
+                                                    ammos[current_ammo_index].ammoData,
+                                                    basicEnemy.targetLayer
+                                                    );
+
+                _starts[i] += new Vector2(Mathf.Cos(Time.fixedTime), Mathf.Sin(Time.fixedTime));
+            }
+            //_timeCounter+=Time.fixedDeltaTime;
+            _timeCounter += 0.25f;
+            yield return _wait;
+        }
+    }
+
+    //Attack 4 : move along wall and shoot
+    public void Skill4()
+    {
+        StartCoroutine(Skill4(3));
+    }
+    IEnumerator Skill4(int _turn)
+    {
+
+        float shoot_gap_time = 0.05f;
+        WaitForFixedUpdate _wait = new WaitForFixedUpdate();
+
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        //verticle
+        Vector2[] verticle_endStart = {
+            new Vector2(-20.5f, -14f),new Vector2(-20.5f, 18.6f)
+        };
+        Vector2 _movePoint = verticle_endStart[0];
+
+        float _t = 0;
+        int _turnCounter = 0;
+        while (_turnCounter <= _turn)
+        {
+            transform.position = Vector2.Lerp(transform.position, _movePoint, Time.deltaTime);
+            _t += Time.deltaTime;
+            if (_t > shoot_gap_time)
+            {
+                _t = 0;
+                //shoot
+                weapons[current_weapon_index].Shoot(transform.right,
+                                                    ammos[current_ammo_index].ammoData,
+                                                    basicEnemy.targetLayer);
+
+            }
+
+            //reached end or start point.
+            if (Vector2.Distance(_movePoint, transform.position) < 1f)
+            {
+                //reverse
+                _turnCounter++;
+                _movePoint = verticle_endStart[_turnCounter % 2];
+
+            }
+
+            yield return _wait;
+        }
 
 
+        //horizontal
+        _turnCounter = 0;
+        Vector2[] horizontal_endStart = {
+            new Vector2(-20.5f, 18.6f),new Vector2(20.5f,18.6f)
+        };
+        _movePoint = horizontal_endStart[0];
+
+        while (_turnCounter <= _turn)
+        {
+            transform.position = Vector2.Lerp(transform.position, _movePoint, Time.deltaTime);
+            _t += Time.deltaTime;
+            if (_t > shoot_gap_time)
+            {
+                _t = 0;
+                //shoot
+                weapons[current_weapon_index].Shoot(-transform.up,
+                                                    ammos[current_ammo_index].ammoData,
+                                                    basicEnemy.targetLayer);
+
+                Debug.Log("skill4 shoot " + _turnCounter);
+            }
+
+            //reached end or start point.
+            if (Vector2.Distance(_movePoint, transform.position) < 1f)
+            {
+                //reverse
+                _turnCounter++;
+                _movePoint = horizontal_endStart[_turnCounter % 2];
+
+            }
+
+            yield return _wait;
+        }
+
+        SetAmmo(0);
+    }
 }
+
