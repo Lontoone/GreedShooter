@@ -33,7 +33,7 @@ public class PlayerControl : MonoBehaviour
         EquipWeapon(weapon.weaponData);
     }
 
-
+    Vector2 _shoot_point;
 
     private void Update()
     {
@@ -50,13 +50,25 @@ public class PlayerControl : MonoBehaviour
         }
 
         //Auto Shoot
-        actionController.AddAction(shoot_act);
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow) ||
+            Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.UpArrow))
+        {
+            _shoot_point = GetArrowKeyValue();
+            actionController.AddAction(shoot_act);
+
+            Vector3 look_dir = _shoot_point;
+            float m = look_dir.y / Mathf.Pow(look_dir.x * look_dir.x + look_dir.y * look_dir.y, 0.5f);
+            float m_angle = (float)(Math.Atan(m)) * Mathf.Rad2Deg;
+            weapon.transform.eulerAngles = new Vector3(0, 0, -m_angle) + transform.rotation.eulerAngles;
+        }
+        Debug.Log(_shoot_point);
     }
 
     private void FixedUpdate()
     {
         // rotate player 
-        if (cursorControl.cursor_world_position.x > transform.position.x)
+        //if (cursorControl.cursor_world_position.x > transform.position.x)
+        if (_shoot_point.x > 0)
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
@@ -66,10 +78,10 @@ public class PlayerControl : MonoBehaviour
         }
 
         //rotate weapon to point at cursor 
-        Vector3 look_dir = cursorControl.transform.position - weapon.transform.position;
-        float m = look_dir.y / Mathf.Pow(look_dir.x * look_dir.x + look_dir.y * look_dir.y, 0.5f);
-        float m_angle = (float)(Math.Atan(m)) * Mathf.Rad2Deg;
-        weapon.transform.eulerAngles = new Vector3(0, 0, -m_angle) + transform.rotation.eulerAngles;
+        //Vector3 look_dir = cursorControl.transform.position - weapon.transform.position;
+        //float m = look_dir.y / Mathf.Pow(look_dir.x * look_dir.x + look_dir.y * look_dir.y, 0.5f);
+        //float m_angle = (float)(Math.Atan(m)) * Mathf.Rad2Deg;
+        //weapon.transform.eulerAngles = new Vector3(0, 0, -m_angle) + transform.rotation.eulerAngles;
 
 
         //move or idle
@@ -101,8 +113,8 @@ public class PlayerControl : MonoBehaviour
         shoot_act.action.AddListener(delegate
         {
             //Debug.Log(cursorControl.cursor_world_position);
-            //weapon.Shoot(cursorControl.cursor_world_position,
-            weapon.Shoot((cursorControl.cursor_world_position - (Vector2)transform.position),
+            //weapon.Shoot((cursorControl.cursor_world_position - (Vector2)transform.position),
+            weapon.Shoot(GetArrowKeyValue(),
                         ammo.ammoData,
                         targetLayer);
         });
@@ -110,6 +122,35 @@ public class PlayerControl : MonoBehaviour
         shoot_act.gap_time = _newWeaponData.shoot_gap_time;
         weapon.SetData(_newWeaponData);
 
+    }
+    Vector2 GetArrowKeyValue()
+    {
+        Vector2 _res = Vector2.zero;
+
+        if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.UpArrow))
+            _res = new Vector2(-0.5f, 0.5f);
+
+        else if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.DownArrow))
+            _res = new Vector2(-0.5f, -0.5f);
+
+        else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.UpArrow))
+            _res = new Vector2(0.5f, 0.5f);
+
+        else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.DownArrow))
+            _res = new Vector2(0.5f, -0.5f);
+
+        else if (Input.GetKey(KeyCode.UpArrow))
+            _res = Vector2.up;
+
+        else if (Input.GetKey(KeyCode.DownArrow))
+            _res = Vector2.down;
+
+        else if (Input.GetKey(KeyCode.LeftArrow))
+            _res = Vector2.left;
+
+        else if (Input.GetKey(KeyCode.RightArrow))
+            _res = Vector2.right;
+        return _res;
     }
 
     public void EquipAmmo(AmmoData _ammoData)
@@ -150,11 +191,25 @@ public class PlayerControl : MonoBehaviour
         Debug.Log("dash " + rigidbody.velocity);
 
         hitable.isHitable = false;
-        Invoke("SetHitable",0.25f);
+        Invoke("SetHitable", 0.25f);
     }
 
-    void SetHitable() {
+    void SetHitable()
+    {
         hitable.isHitable = true;
+    }
+
+
+    public static float Angle(Vector2 p_vector2)
+    {
+        if (p_vector2.x < 0)
+        {
+            return 360 - (Mathf.Atan2(p_vector2.x, p_vector2.y) * Mathf.Rad2Deg * -1);
+        }
+        else
+        {
+            return Mathf.Atan2(p_vector2.x, p_vector2.y) * Mathf.Rad2Deg;
+        }
     }
 
 }
