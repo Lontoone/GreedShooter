@@ -15,7 +15,6 @@ using UnityEngine;
 public class GCManager : MonoBehaviour
 {
     static Dictionary<string, LinkedList<object>> dicts = new Dictionary<string, LinkedList<object>>();
-    static Dictionary<string, int> group_amount = new Dictionary<string, int>();
     static Dictionary<string, Vector2> registerScale = new Dictionary<string, Vector2>();
 
     static int _db_c = 0;
@@ -35,9 +34,8 @@ public class GCManager : MonoBehaviour
         }
         else
         {
-            //already registered. Add to first as usable.
-            //dicts[_key].AddFirst(_obj);
-            //(_obj as GameObject).SetActive(false);
+            //already registered.
+          
             Debug.Log("Already exist");
         }
     }
@@ -75,8 +73,7 @@ public class GCManager : MonoBehaviour
             GameObject _newobj = UnityEngine.GameObject.Instantiate((GameObject)dicts[_key].First.Value, parent);
             _newobj.SetActive(true);
             dicts[_key].AddLast(_newobj);
-            //LinkedListNode<object> newNode = dicts[_key].AddLast(_newobj);
-            //return newNode;
+          
             Debug.Log("GC Create new one");
 
             _newobj.transform.localScale = registerScale[_key];
@@ -129,25 +126,5 @@ public class GCManager : MonoBehaviour
     public static void Clear() {
         dicts.Clear();
         registerScale.Clear();
-    }
-
-    public static void RegisterGrounp(string _groupkey, int amount)
-    {
-
-        if (!group_amount.ContainsKey(_groupkey))
-        {
-            group_amount.Add(_groupkey, amount);
-        }
-    }
-    public static int GetGroupCount(string _groupKey)
-    {
-        if (!group_amount.ContainsKey(_groupKey))
-        {
-            return 0;
-        }
-        else
-        {
-            return group_amount[_groupKey];
-        }
     }
 }
