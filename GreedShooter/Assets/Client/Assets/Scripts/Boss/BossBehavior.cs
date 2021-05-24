@@ -7,7 +7,7 @@ public class BossBehavior : MonoBehaviour
     ActionController actionController;
     HitableObj hitableObj;
     BasicEnemy basicEnemy;
-    public ActionController.mAction skill1, skill2, skill3, skill4;
+    public ActionController.mAction skill1, skill2, skill3, skill4, dash;
     private void Start()
     {
         actionController = GetComponent<ActionController>();
@@ -15,6 +15,12 @@ public class BossBehavior : MonoBehaviour
         basicEnemy = GetComponent<BasicEnemy>();
 
         cDrawSkill = StartCoroutine(DrawASkill());
+
+        hitableObj.Die_event += Die;
+    }
+    public void OnDestroy()
+    {
+        hitableObj.Die_event -= Die;
     }
 
 
@@ -54,6 +60,10 @@ public class BossBehavior : MonoBehaviour
             else if (_rand < 80)
             {
                 actionController.AddAction(skill3);
+            }
+            else
+            {
+                //actionController.AddAction(dash);
             }
 
             yield return wait;
@@ -116,6 +126,7 @@ public class BossBehavior : MonoBehaviour
             int random_scale = Random.Range(2, 30);
             //Vector2 _pos = new Vector2(Mathf.Cos(Time.time), Mathf.Sin(Time.time)) * random_scale;
             Vector2 _pos = LevelManager.instance.randomPosInMap;
+            Debug.Log("skill 2 " + _pos);
             weapons[current_weapon_index].Shoot(
                _pos,
                ammos[current_ammo_index].ammoData,
@@ -162,7 +173,7 @@ public class BossBehavior : MonoBehaviour
             for (int i = 0; i < _count; i++)
             {
                 weapons[current_weapon_index].Shoot(
-                                                    _starts[i] * _timeCounter*0.5f,
+                                                    _starts[i] * _timeCounter * 0.5f,
                                                     ammos[current_ammo_index].ammoData,
                                                     basicEnemy.targetLayer
                                                     );
@@ -258,6 +269,25 @@ public class BossBehavior : MonoBehaviour
         }
 
         SetAmmo(0);
+    }
+
+    public void Dash_random()
+    {
+        StartCoroutine(DashMove(LevelManager.instance.randomPosInMap));
+    }
+    IEnumerator DashMove(Vector2 _goal)
+    {
+        WaitForFixedUpdate _wait = new WaitForFixedUpdate();
+        while (Vector2.Distance(transform.position, _goal) > 0.1f)
+        {
+            transform.position = Vector2.Lerp(transform.position, _goal, Time.deltaTime);
+            yield return _wait;
+        }
+    }
+
+    public void Die() {
+        //Player win.
+        GameResultManager.instance.SetResult(true);
     }
 }
 

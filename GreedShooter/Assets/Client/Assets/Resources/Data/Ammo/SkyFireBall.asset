@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5311b6d6cad5994b9f7dfcbafac78ae, type: 3}
+  m_Name: SkyFireBall
+  m_EditorClassIdentifier: 
+  speed: 5
+  damage: 5
+  life_time: 0.5
+  GC_key: GC_Sky_fireBall
+  img: {fileID: 21300000, guid: 000aafaba29083c43a6c75e49afedb76, type: 3}
+  ammo_prefab: {fileID: 2630705248332552079, guid: 4df903ca4a3916442b54caf35dea2a70, type: 3}
+  sfx: {fileID: 8300000, guid: a9b4391350f31174c85ccd1c26325133, type: 3}

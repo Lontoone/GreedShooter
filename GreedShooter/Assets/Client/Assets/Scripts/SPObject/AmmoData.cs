@@ -12,4 +12,6 @@ public class AmmoData : ScriptableObject
     public Sprite img;
     //public Sprite img;
     public GameObject ammo_prefab;
+
+    public AudioClip sfx;
 }

@@ -15,6 +15,7 @@ public class Loot : MonoBehaviour
 
     public void SetUP(ScriptableObject _data)
     {
+        data = _data;
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         //temp  

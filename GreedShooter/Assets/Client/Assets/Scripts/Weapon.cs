@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    
     public WeaponData weaponData;
     SpriteRenderer spriteRenderer;
     private void Awake()

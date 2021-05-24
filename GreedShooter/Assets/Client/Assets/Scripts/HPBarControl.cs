@@ -64,7 +64,7 @@ public class HPBarControl : MonoBehaviour
 
     }
 
-    void UpdateHPBar()
+    public void UpdateHPBar()
     {
         bar.fillAmount = hitable.HP / (float)maxHP;
 

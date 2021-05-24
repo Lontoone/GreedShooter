@@ -13,9 +13,11 @@ public class Ammo : MonoBehaviour
     public LayerMask targetLayer;
 
     public UnityEvent OnDestory;
+    public UnityEvent OnShoot;
     protected Collider2D collider;
     protected ContactFilter2D filter2D;
     protected static Collider2D[] res = new Collider2D[200];
+
 
     protected virtual void Awake()
     {
@@ -34,6 +36,11 @@ public class Ammo : MonoBehaviour
         Invoke("DoDestory", ammoData.life_time);
 
         //SetTargetLayer(targetLayer);
+
+        if (OnShoot != null)
+        {
+            OnShoot.Invoke();
+        }
     }
     public void SetTargetLayer(LayerMask layerMask)
     {

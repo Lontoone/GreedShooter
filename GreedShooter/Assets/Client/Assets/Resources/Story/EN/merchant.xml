@@ -1,0 +1,73 @@
+merchant dialog
+<story>
+    <l  by="Merchant_obj" title="merchant" init("talk"=1) >  Hello! my friend.</l>
+
+    <if (talk <=1)>
+        <l by="Merchant_obj" title="merchant" init("_wep"=0) init("_ammo"=0)> What are you doing down here? </l>
+        <l> Ha ! I know, It must be treasure? Ha! </l>
+
+    </if>
+
+    <if (talk ==2 )>
+        <l  by="Merchant_obj" title="merchant"> Long time no see~ </l>
+        <l> I miss your money.</l>
+    </if>
+
+
+    <if (talk ==3 )>
+        <l  by="Merchant_obj" title="merchant"> Meet again!  little one. </l>
+    </if>
+
+    <l
+        set("temp_buy_res"=1)
+        set("temp_hp_cost"= "talk" *100)
+        set("temp_wep_cost"=1)
+        set("temp_ammo_cost"=1)
+        price(wep)
+        price(ammo)
+            > So what can I offer you today?</l>
+
+    <select> 
+        <opt set("temp_buy"=hp) buy(hp)> Buy Health.  ( \<color=red\> $ $[temp_hp_cost] \</color\>) </opt>
+
+        <if (  _wep < "talk" )>
+            <opt set("temp_buy"=weapon)  buy(weapon)) > Buy Weapon  ( \<color=red\> $ $[temp_wep_cost] \</color\>) </opt>
+        </if>
+
+        <if (  _ammo < "talk" )>
+            <opt set("temp_buy"=ammo) set("_ammo"= "_ammo" + 1 ) buy(ammo)> Buy Ammo   ( \<color=red\> $ $[temp_ammo_cost] \</color\>) </opt>
+        </if>
+
+        <opt set("temp_buy"=money) buy(money)  > Exchange sight with money    </opt>
+
+        <opt set("temp_buy"=none) buy(none) > Bye </opt>
+        <opt set("temp_buy"=nextlv) buy(nextlv) > Start Next Level </opt>
+        
+
+    </select>
+
+    Buy Failed
+    <if (temp_buy_res ==0) >
+        <l> Buy it when you have money!! </l>
+    </if>
+
+    Buy weapon
+    <if (temp_buy== weapon) && ( temp_buy_res==1)>
+        <l set("_wep" = "talk"+1) > Fire them all !  </l>
+    </if>
+
+    Buy ammo
+    <if (temp_buy== ammo) && ( temp_buy_res==1)>
+        <l set("_ammo" = "talk"+1) > Wise choise!   </l>
+    </if>
+
+    Buy sight
+    <if (temp_buy== money) >
+        <l > Be careful~  </l>
+    </if>
+
+    bye 
+    <if (temp_buy ==none) >
+        <l> Bye~</l>
+    </if>
+</story>

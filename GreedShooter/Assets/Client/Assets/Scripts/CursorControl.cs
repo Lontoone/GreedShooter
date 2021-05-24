@@ -8,6 +8,20 @@ public class CursorControl : MonoBehaviour
 {
     Camera _camer;
 
+    public static CursorControl instance;
+    public void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else {
+            Destroy(gameObject);
+        }
+
+        Cursor.visible = false;
+    }
+
     public Vector2 cursor_world_position
     {
         get { return _camer.ScreenToWorldPoint(Input.mousePosition); }

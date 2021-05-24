@@ -16,6 +16,7 @@ public class GCManager : MonoBehaviour
 {
     static Dictionary<string, LinkedList<object>> dicts = new Dictionary<string, LinkedList<object>>();
     static Dictionary<string, int> group_amount = new Dictionary<string, int>();
+    static Dictionary<string, Vector2> registerScale = new Dictionary<string, Vector2>();
 
     static int _db_c = 0;
     public static void RegisterObject(string _key, Object _obj)
@@ -26,6 +27,8 @@ public class GCManager : MonoBehaviour
             //create new and add to first
             dicts.Add(_key, new LinkedList<object>());
             dicts[_key].AddFirst(_obj);
+
+            registerScale.Add(_key, (_obj as GameObject).transform.localScale);
 
             (_obj as GameObject).SetActive(false);
             Debug.Log("current dict count " + dicts.Count);
@@ -63,6 +66,8 @@ public class GCManager : MonoBehaviour
                 (first_obj.Value as GameObject).name = _db_c.ToString();
                 _db_c++;
 
+                (first_obj.Value as GameObject).transform.localScale = registerScale[_key];
+
                 return (first_obj.Value as GameObject);
             }
 
@@ -73,6 +78,8 @@ public class GCManager : MonoBehaviour
             //LinkedListNode<object> newNode = dicts[_key].AddLast(_newobj);
             //return newNode;
             Debug.Log("GC Create new one");
+
+            _newobj.transform.localScale = registerScale[_key];
 
             return _newobj;
 
@@ -117,6 +124,11 @@ public class GCManager : MonoBehaviour
         {
             dicts.Remove(_key);
         }
+    }
+
+    public static void Clear() {
+        dicts.Clear();
+        registerScale.Clear();
     }
 
     public static void RegisterGrounp(string _groupkey, int amount)

@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 //Basic enemy class
 public class BasicEnemy : MonoBehaviour
 {
+
     public ActionController.mAction Idle_act, move_act, shoot_act, hurt_act, die_act;
     HitableObj hitableObj;
     ActionController actionController;
@@ -27,11 +27,15 @@ public class BasicEnemy : MonoBehaviour
     ContactFilter2D filter = new ContactFilter2D();
     Collider2D[] detect_result = new Collider2D[5];
 
+    AudioSource audioSource;
+    public AudioClip hurtClip, dieClip;
+
     private void Start()
     {
         sp = GetComponent<SpriteRenderer>();
         actionController = GetComponent<ActionController>();
         hitableObj = GetComponent<HitableObj>();
+        audioSource = GetComponent<AudioSource>();
 
         filter.SetLayerMask(detect_layermask);
         filter.useTriggers = true;
@@ -49,11 +53,18 @@ public class BasicEnemy : MonoBehaviour
 
         //generate move goal
         move_goal = new GameObject().transform;
+
+        hitableObj.gotHit_event += OnHurt;
+        hitableObj.Die_event += Die;
+
     }
     private void OnDestroy()
     {
         actionController.eOnActionComplete -= SetDefaultAction;
         actionController.eActionQueueCleared -= delegate { actionController.AddAction(Idle_act); };
+
+        hitableObj.gotHit_event -= OnHurt;
+        hitableObj.Die_event -= Die;
     }
 
 
@@ -145,6 +156,10 @@ public class BasicEnemy : MonoBehaviour
 
     void Die()
     {
-
+        audioSource.PlayOneShot(dieClip);
+    }
+    void OnHurt()
+    {
+        audioSource.PlayOneShot(hurtClip);
     }
 }

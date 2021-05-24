@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4269ce4a070624b48a75d7d28aedad83, type: 3}
+  m_Name: Good1
+  m_EditorClassIdentifier: 
+  weaponGoods:
+  - data: {fileID: 11400000, guid: 2ec6d21d000710a4eaa7d3ea8dd8e617, type: 2}
+    cost: 300
+  - data: {fileID: 11400000, guid: 391797f282611794e85223cbd8ec6ae6, type: 2}
+    cost: 350
+  - data: {fileID: 11400000, guid: 84260def325d8934fa11feea51b70298, type: 2}
+    cost: 150
+  - data: {fileID: 11400000, guid: 86ea3c55f39a804499ce7526863e7b21, type: 2}
+    cost: 300
+  ammoGoods:
+  - data: {fileID: 11400000, guid: 942dfe0b7181bbb47a0f01223236cf84, type: 2}
+    cost: 150
+  - data: {fileID: 11400000, guid: 6e385b39aae8d4942b7de0f2d2a489ab, type: 2}
+    cost: 550
+  - data: {fileID: 11400000, guid: 44c30f82a6ed00a46a1b3cbe2c05c4c7, type: 2}
+    cost: 400
+  - data: {fileID: 11400000, guid: 63a8308bccd98fd48965f48a47815be3, type: 2}
+    cost: 600

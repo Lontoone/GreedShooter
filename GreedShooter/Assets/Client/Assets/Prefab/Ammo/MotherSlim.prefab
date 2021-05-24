@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 3660106316232452501}
   - component: {fileID: 3660106316232452502}
   - component: {fileID: 3660106316232452500}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: MotherSlim
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -61,12 +61,25 @@ public class Meteorite : Ammo
 
     public override void SetUP(Vector2 _start_pos, Vector2 _vec)
     {
-        base.SetUP(_start_pos, _vec);
 
         //put hint in dest pos
         GameObject _hint = GCManager.Instantiate(hint_gc_key);
-        //_hint.transform.position = (Vector2)transform.position + vec;
-        _hint.transform.position = vec;
+
+        //temp
+        if (targetLayer == (targetLayer | (1 << LayerMask.NameToLayer("Player"))))
+        {
+            base.SetUP(_start_pos, _vec);
+            _hint.transform.position = vec;
+        }
+        else
+        {
+            base.SetUP(_start_pos, CursorControl.instance.cursor_world_position + _vec.normalized *10);
+            _hint.transform.position = CursorControl.instance.cursor_world_position;
+        }
+
+        //base.SetUP(_start_pos, CursorControl.instance.cursor_world_position);
+        //_hint.transform.position = vec;
+        //_hint.transform.position =CursorControl.instance.cursor_world_position;
 
         //move to the sky:
         transform.position = new Vector2(vec.x, vec.y + 50);

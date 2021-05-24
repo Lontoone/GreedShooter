@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5311b6d6cad5994b9f7dfcbafac78ae, type: 3}
   m_Name: MotherSlim
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 2.5
   damage: 1
-  life_time: 5
+  life_time: 3
   GC_key: MotherSlim
   img: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   ammo_prefab: {fileID: 3660106316232452497, guid: 771eba337037f3d4289f979968dba768, type: 3}
+  sfx: {fileID: 8300000, guid: a9b4391350f31174c85ccd1c26325133, type: 3}
