@@ -11,6 +11,13 @@ public class BlackScreenEffect : MonoBehaviour
     readonly string _magnitude_name = "_Magnitude";
     readonly string _Maskmagnitude_name = "_MaskTex_mag";
 
+    float Origin_magnitude = 0.05f;
+    public void Start()
+    {
+        //Origin_magnitude = displacement_magnitude;
+        SetMagnitude(Origin_magnitude);
+    }
+
     /*  
     ??**************!ONLY WORK FOR SRP!*****************\
     */
@@ -18,6 +25,10 @@ public class BlackScreenEffect : MonoBehaviour
     void OnRenderImage(RenderTexture src, RenderTexture dst)
     {
         Graphics.Blit(src, dst, effectMaterial);
+    }
+    public void OnDestroy()
+    {
+        SetMagnitude(Origin_magnitude);
     }
     /*
     ??***********************************************/
@@ -68,9 +79,9 @@ public class BlackScreenEffect : MonoBehaviour
     {
         WaitForFixedUpdate _wait = new WaitForFixedUpdate();
         //float _temp_mag = mask_magnitude;
-        while ( Mathf.Abs(mask_magnitude - _goal)>0.01f)
+        while (Mathf.Abs(mask_magnitude - _goal) > 0.01f)
         {
-            mask_magnitude = Mathf.Lerp(mask_magnitude, _goal, Time.fixedDeltaTime*10f);
+            mask_magnitude = Mathf.Lerp(mask_magnitude, _goal, Time.fixedDeltaTime * 10f);
             Shader.SetGlobalFloat(_Maskmagnitude_name, mask_magnitude);
             yield return _wait;
         }
@@ -78,7 +89,8 @@ public class BlackScreenEffect : MonoBehaviour
     }
     public void SetMagnitude(float _mag)
     {
-        StartCoroutine(LerpManitude(_mag));
+        float mag = Mathf.Clamp(_mag, 0, 1.5f);
+        StartCoroutine(LerpManitude(mag));
     }
 
     private void FixedUpdate()

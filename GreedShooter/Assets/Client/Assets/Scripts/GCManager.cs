@@ -15,7 +15,7 @@ using UnityEngine;
 public class GCManager : MonoBehaviour
 {
     static Dictionary<string, LinkedList<object>> dicts = new Dictionary<string, LinkedList<object>>();
-    static Dictionary<string, Vector2> registerScale = new Dictionary<string, Vector2>();
+    static Dictionary<string, Vector3> registerScale = new Dictionary<string, Vector3>();
 
     static int _db_c = 0;
     public static void RegisterObject(string _key, Object _obj)

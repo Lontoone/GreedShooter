@@ -841,8 +841,8 @@ MonoBehaviour:
     priority: 99
     force: 1
     duration: 5
-    isLoop: 0
-    timeOut: 10
+    isLoop: 1
+    timeOut: 20
     time_out_counter: 0
   weapons:
   - {fileID: 6531092913605732097}

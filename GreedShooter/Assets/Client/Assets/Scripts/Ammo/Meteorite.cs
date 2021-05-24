@@ -73,7 +73,7 @@ public class Meteorite : Ammo
         }
         else
         {
-            base.SetUP(_start_pos, CursorControl.instance.cursor_world_position + _vec.normalized *10);
+            base.SetUP(_start_pos, CursorControl.instance.cursor_world_position + _vec.normalized *5f);
             _hint.transform.position = CursorControl.instance.cursor_world_position;
         }
 

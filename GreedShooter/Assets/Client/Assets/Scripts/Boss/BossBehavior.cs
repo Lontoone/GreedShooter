@@ -38,7 +38,7 @@ public class BossBehavior : MonoBehaviour
         while (true)
         {
             //Draw random skill
-            int _rand = Random.Range(0, 100);
+            int _rand = Random.Range(0, 200);
             if (_rand <= 20)
             {
                 actionController.AddAction(skill1);
@@ -63,7 +63,8 @@ public class BossBehavior : MonoBehaviour
             }
             else
             {
-                //actionController.AddAction(dash);
+                _dash_goal = LevelManager.instance.randomPosInMap;
+                actionController.AddAction(dash);
             }
 
             yield return wait;
@@ -271,9 +272,11 @@ public class BossBehavior : MonoBehaviour
         SetAmmo(0);
     }
 
+    Vector2 _dash_goal = new Vector2();
     public void Dash_random()
     {
-        StartCoroutine(DashMove(LevelManager.instance.randomPosInMap));
+        transform.position = Vector2.Lerp(transform.position, _dash_goal, Time.deltaTime * basicEnemy.speed);
+        //StartCoroutine(DashMove(LevelManager.instance.randomPosInMap));
     }
     IEnumerator DashMove(Vector2 _goal)
     {
@@ -285,7 +288,8 @@ public class BossBehavior : MonoBehaviour
         }
     }
 
-    public void Die() {
+    public void Die()
+    {
         //Player win.
         GameResultManager.instance.SetResult(true);
     }
