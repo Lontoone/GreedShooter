@@ -19,7 +19,7 @@ MonoBehaviour:
     cost: 350
   - data: {fileID: 11400000, guid: 84260def325d8934fa11feea51b70298, type: 2}
     cost: 150
-  - data: {fileID: 11400000, guid: 86ea3c55f39a804499ce7526863e7b21, type: 2}
+  - data: {fileID: 11400000, guid: dd2c62a27bbe22348a6e07b83966a397, type: 2}
     cost: 300
   ammoGoods:
   - data: {fileID: 11400000, guid: 942dfe0b7181bbb47a0f01223236cf84, type: 2}
