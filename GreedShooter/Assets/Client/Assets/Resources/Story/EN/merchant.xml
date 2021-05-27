@@ -53,12 +53,12 @@ merchant dialog
 
     Buy weapon
     <if (temp_buy== weapon) && ( temp_buy_res==1)>
-        <l set("_wep" = "talk") > Fire them all !  </l>
+        <l set("_wep" = "talk"+1) > Fire them all !  </l>
     </if>
 
     Buy ammo
     <if (temp_buy== ammo) && ( temp_buy_res==1)>
-        <l set("_ammo" = "talk") > Wise choise!   </l>
+        <l set("_ammo" = "talk"+1) > Wise choise!   </l>
     </if>
 
     Buy sight
